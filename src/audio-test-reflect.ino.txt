@@ -1,0 +1,43 @@
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
+// GUItool: begin automatically generated code
+AudioInputI2S            i2s2;           //xy=364,251
+AudioOutputI2S           i2s1;           //xy=538,247
+AudioConnection          patchCord1(i2s2, 0, i2s1, 0);
+AudioConnection          patchCord2(i2s2, 1, i2s1, 1);
+AudioControlSGTL5000     sgtl5000_1;     //xy=336,371
+// GUItool: end automatically generated code
+
+
+#define HOOK_PIN 0
+#define DIALPAD_PIN 1
+
+// Script setup step
+void setup()
+{
+  // record buffer audio memory
+  AudioMemory(60);
+
+  pinMode(LED_BUILTIN, OUTPUT);
+
+  pinMode(HOOK_PIN, INPUT);
+  pinMode(DIALPAD_PIN, INPUT);
+  digitalWrite(HOOK_PIN, HIGH);
+  digitalWrite(DIALPAD_PIN, HIGH);
+
+  // Enable the audio shield, select input, and enable output
+  sgtl5000_1.enable();
+  // Define which input on the audio shield to use (AUDIO_INPUT_LINEIN / AUDIO_INPUT_MIC)
+  sgtl5000_1.inputSelect(AUDIO_INPUT_MIC);
+  // sgtl5000_1.adcHighPassFilterDisable(); //
+  sgtl5000_1.volume(0.95);
+  sgtl5000_1.micGain(20);
+}
+
+void loop() {
+  delay(1000);
+}
